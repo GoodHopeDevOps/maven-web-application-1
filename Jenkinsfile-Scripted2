@@ -1,0 +1,42 @@
+node('nestle-node'){
+
+
+  //echo "GitHub Branch name: ${env.BRANCH_NAME}"
+  //echo "Jenkins Job number: ${env.BUILD_NUMBER}"
+  echo "Jenkins Node Name ${env.NODE_NAME}"
+  
+  echo "Jenkins Home ${env.JENKINS_HOME}"
+  echo "Jenkins URL ${env.JENKINS_URL}"
+  echo "JOB Name ${env.JOB_NAME}"
+  
+  
+def mavenHome = tool name: "maven3.8.3"
+
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+
+
+
+stage('CodeCheckOut'){
+git branch: 'master', credentialsId: 'f252sq216w6-6s2s5-63a0-a12s-3s30s25a4', url: 'https://github.com/SourceTechtalents/maven-web-application'
+}
+
+stage('Build'){
+sh "${mavenHome}/bin/mvn clean package"
+}
+/*
+stage('RunCodeQualityAnalysis'){
+sh "mvn  sonar:sonar"
+}
+
+stage('UploadArtifactsToNexus'){
+sh "mvn deploy"
+}
+
+stage('DeployApplicationUsingTomcat'){
+sshagent(['4d2aals5-d55d-6441-5478-hjdkl5d6558']) {
+  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.225.200.125:/opt/apache-tomcat-9.0.54/webapps/"
+}
+}
+*/
+
+}

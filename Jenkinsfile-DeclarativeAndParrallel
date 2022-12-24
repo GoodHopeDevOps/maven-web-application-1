@@ -1,0 +1,39 @@
+pipeline{
+    
+    agent any
+    
+    tools{
+        maven 'maven3.8.5'
+    }
+
+stages{
+//Get the code from GitHub
+    stage('CodeCheckOut'){
+	steps{
+	   
+	git branch: 'master', credentialsId: '6d5sa55-jf46-5s5d-5s55-5d44d44d4d5s', url: 'https://github.com/SourceTechTalents/maven-web-application'
+	}
+	}
+  
+  //Run Junit Test cases & Do the Build
+  
+  stage('RunUnitTestCases&DoTheBuild'){
+  steps{
+  parallel(
+   RunUnitTestCases: {
+   sh "mvn test"
+   },
+   
+   Build: {
+   sh "mvn clean package"
+   }
+  
+  )
+  }
+  }
+  
+  
+  
+}// Stages Closing
+  
+}// Pipeline CLosing

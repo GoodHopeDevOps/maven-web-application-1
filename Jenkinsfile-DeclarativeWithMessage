@@ -1,0 +1,75 @@
+pipeline{
+
+agent any
+
+tools{
+maven 'maven3.8.2'
+
+}
+
+triggers{
+pollSCM('* * * * *')
+}
+
+options{
+timestamps()
+buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
+}
+
+stages{
+
+  stage('CodeCheckOut'){
+    steps{
+    git branch: 'master', credentialsId: '8s85ds5-9g45-6gdgg-5fgh-555s5shhsjsj', url: 'https://github.com/SourceTechTalents/maven-web-application'
+	
+	}
+  }
+  
+  stage('Build'){
+  steps{
+  sh  "mvn clean package"
+  }
+  }
+/*
+ stage('RunCodeQualityAnalysis'){
+  steps{
+  sh  "mvn clean sonar:sonar"
+  }
+  }
+  
+  stage('UploadArtifactsToNexus'){
+  steps{
+  sh  "mvn clean deploy"
+  }
+  }
+  
+  stage('DeployApplicationUsingTomcat'){
+  steps{
+  sshagent(['s55s5d44d-5sd1-5s5d-d5d5-c55d5d55d55']) {
+   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@54.224.180.152:/opt/apache-tomcat-9.0.50/webapps/"    
+  }
+  }
+  }
+  */
+}//Stages Closing
+
+post{
+
+ success{
+ emailext to: 'info@becomeabecomeatechpro.com',
+          subject: "Build is Completed | Build # is ${env.BUILD_NUMBER} | Build status is ${currentBuild.result}",
+          body: "This pipeline build has now been completed. The status of build, ${env.BUILD_NUMBER} is ${currentBuild.result}.",
+          replyTo: 'info@becomeatechpro.com'
+ }
+ 
+ failure{
+ emailext to:  'info@becomeabecomeatechpro.com',
+          subject: "Build is Completed | Build # is ${env.BUILD_NUMBER} | Build status is ${currentBuild.result}",
+          body: "This pipeline build has now been completed. The status of build, ${env.BUILD_NUMBER} is ${currentBuild.result}.",
+          replyTo: 'info@becomeatechpro.com'
+ }
+ 
+}
+
+
+}//Pipeline closing
