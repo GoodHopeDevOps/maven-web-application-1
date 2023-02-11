@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1 align="center">Welcome to BecomeATechPro.com</h1>
-<h1 align="center">The programs we offer include DevOps Made Easy, Linux Made Easy, Python Made Easy, and Java Made Easy. We hold live classes, online, and we make the recordings available to our trainees. We provide flashcards, quizzes and projects for our trainees to get hands-on. We have also partnered with SourceTechTalents.com to complete projects for clients.</h1>
+<h1 align="center">POLL SCM- The programs we offer include DevOps Made Easy, Linux Made Easy, Python Made Easy, and Java Made Easy. We hold live classes, online, and we make the recordings available to our trainees. We provide flashcards, quizzes and projects for our trainees to get hands-on. We have also partnered with SourceTechTalents.com to complete projects for clients.</h1>
 <hr>
 <br>
 	<h1><h3> Server Side IP Address </h3><br>
