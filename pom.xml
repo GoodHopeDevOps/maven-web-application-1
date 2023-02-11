@@ -98,13 +98,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>BecomeATechPro.com Nexus Repository</name>
-	      <url>http://18.116.38.31:8481/becomeatechpro/repository/mywebapp-release/</url>
+	      <url>http://172.31.4.137:8481/becomeatechpro/repository/mywebapp-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>BecomeATechPro.com Snapshot Nexus Repository </name>
-	      <url>http://18.116.38.31:8481/becomeatechpro/repository/mywebapp-snapshot/</url>
+	      <url>http://172.31.4.137:8481/becomeatechpro/repository/mywebapp-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
