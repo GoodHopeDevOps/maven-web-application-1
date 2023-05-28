@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'maven3.6.2'
+    }
+    
+    stages {
+        stage('CheckoutCodeFromGithub') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitHubID', url: 'https://github.com/SourceTechTalents/maven-web-application']])
+            }
+        }
+        stage('BuildWithMaven') {
+            steps {
+                sh "${tool 'maven3.6.2'}/bin/mvn clean"
+                sh "${tool 'maven3.6.2'}/bin/mvn package"
+            }
+        }
+        stage('CodeQualityAnalysis') {
+            steps {
+                sh "${tool 'maven3.6.2'}/bin/mvn clean"
+                sh "${tool 'maven3.6.2'}/bin/mvn sonar:sonar"
+            }
+        }
+        stage('BackupArtifactstoNexus') {
+            steps {
+               sh "${tool 'maven3.6.2'}/bin/mvn clean"
+               sh "${tool 'maven3.6.2'}/bin/mvn deploy"
+            }
+        }
+        stage('DeployToTomcat') {
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'TomcatCredentials', path: '', url: 'http://172.31.34.11:8484/')], contextPath: 'declarativeapp', war: '**/*.war'
+            }
+        }
+    }
+
+}
