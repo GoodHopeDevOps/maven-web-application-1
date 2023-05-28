@@ -1,0 +1,26 @@
+node {
+ def maven_home = tool name: 'maven3.6.2', type: 'maven'
+ stage('CheckoutCodeFromGithub') {
+     // This stage will checkout code from GitHub
+     checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitHubID', url: 'https://github.com/SourceTechTalents/maven-web-application']])
+ }
+ stage('BuildWithMaven') {
+     //This uses the mavenHome Directory to run the specified mvn
+     sh "${maven_home}/bin/mvn clean package"
+ }
+ stage('CodeQualityAnalysis') {
+     // This is to run SonarQube reports
+     sh "${maven_home}/bin/mvn clean sonar:sonar"
+ }
+ stage('BackupArtifactstoNexus') {
+     // This backupup Artifacts to Nexus
+     sh "${maven_home}/bin/mvn clean deploy"
+ }
+ stage('DeployToTomcat') {
+     // Using the Deploy to Container Plugin
+     // deploy adapters: [tomcat9(credentialsId: 'TomcatCredentials', path: '', url: 'http://172.31.34.11:8484/')], contextPath: 'scriptedapp', war: '**/*.war'
+    sshagent(['SSHKey']) {
+        sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.34.11:/opt/tomcat9/webapps/testapp.war"
+    }
+ }
+}
