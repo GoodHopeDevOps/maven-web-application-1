@@ -96,13 +96,13 @@
 	<distributionManagement>
 	
 	    <repository>
-	      <id>mynexus</id>
+	      <id>nexus</id>
 	      <name>BecomeATechPro.com Nexus Repository</name>
 	      <url>http://54.174.67.63:8081/repository/mavenapps-release/></url>
 	    </repository>
 	    
 	    <snapshotRepository>
-	      <id>mynexus</id>
+	      <id>nexus</id>
 	      <name>BecomeATechPro.com Snapshot Nexus Repository </name>
 	      <url>http:/54.174.67.63/:8081/repository/mavenapp-snapshots/</url>
 	    </snapshotRepository>
