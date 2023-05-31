@@ -104,7 +104,7 @@
 	    <snapshotRepository>
 	      <id>mynexus</id>
 	      <name>BecomeATechPro.com Snapshot Nexus Repository </name>
-	      <url>http://172.31.90.40:8081/repository/mavenapp-snapshots/</url>
+	      <url>http:/54.174.67.63/:8081/repository/mavenapp-snapshots/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
